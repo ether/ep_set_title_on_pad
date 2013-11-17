@@ -1,6 +1,7 @@
 exports.handleClientMessage_CUSTOM = function(hook, context, cb){
   var message = context.payload.message;
   if(!$("#input_title").is(":visible")){ // if we're not editing..
+    window.document.title = message;
     $('#title > h1').text(message);
     $('#input_title').val(message);
   }
@@ -24,6 +25,7 @@ exports.documentReady = function(){
 
   $('#save_title').click(function(){
     sendTitle();
+    window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
     $('#title').show();
     $('#input_title').hide();
@@ -33,6 +35,7 @@ exports.documentReady = function(){
 
   $('#input_title').keyup(function(){
     sendTitle();
+    window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
   });
 }
