@@ -1,6 +1,9 @@
 exports.handleClientMessage_CUSTOM = function(hook, context, cb){
   var message = context.payload.message;
-  $('#title > h1').text(message);
+  if(!$("#input_title").is(":visible")){ // if we're not editing..
+    $('#title > h1').text(message);
+    $('#input_title').val(message);
+  }
 }
 
 exports.documentReady = function(){
