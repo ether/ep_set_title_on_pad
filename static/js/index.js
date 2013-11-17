@@ -11,7 +11,7 @@ exports.documentReady = function(){
   var top = $('.toolbar').position().top;
   var bottom = top + $('.toolbar').height();
   $('#editorcontainerbox').css("top", top+"px");
-  bottom = bottom+5;
+//  bottom = bottom+5;
   bottom = bottom+"px";
   $('.stickyChat, #settings, #importexport, #embed, #connectivity, #users').css("top", bottom);
 
