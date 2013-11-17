@@ -1,0 +1,17 @@
+{
+  "parts": [
+    {
+      "name": "set_title_on_pad",
+      "client_hooks": {
+        "postAceInit": "ep_set_title_on_pad/static/js/index:documentReady",
+        "handleClientMessage_CUSTOM": "ep_set_title_on_pad/static/js/main"
+      },
+      "hooks": {
+        "eejsBlock_body":"ep_set_title_on_pad/eejs",
+        "clientVars":"ep_set_title_on_pad/index:clientVars",
+        "eejsBlock_styles":"ep_set_title_on_pad/eejs",
+        "handleMessage": "ep_set_title_on_pad/handleMessage"
+      }
+    }
+  ]
+}
