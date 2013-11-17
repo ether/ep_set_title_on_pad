@@ -1,3 +1,8 @@
+exports.handleClientMessage_CUSTOM = function(hook, context, cb){
+  var message = context.payload.message;
+  $('#title > h1').text(message);
+}
+
 exports.documentReady = function(){
   var top = $('.toolbar').position().top;
   var bottom = top + $('.toolbar').height();
@@ -15,6 +20,8 @@ exports.documentReady = function(){
   });
 
   $('#save_title').click(function(){
+    sendTitle();
+    $('#title > h1').text($('#input_title').val());
     $('#title').show();
     $('#input_title').hide();
     $('#edit_title').show();

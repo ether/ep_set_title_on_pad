@@ -6,7 +6,13 @@
 
 var authorManager = require("../../src/node/db/AuthorManager"),
 padMessageHandler = require("../../src/node/handler/PadMessageHandler"),
+               db = require('ep_etherpad-lite/node/db/DB').db,
             async = require('../../src/node_modules/async');
+
+
+
+// Remove cache for this procedure
+db['dbSettings'].cache = 0;
 
 var buffer = {};
 
@@ -60,6 +66,7 @@ exports.handleMessage = function(hook_name, context, callback){
         }
       };
       sendToRoom(message, msg);
+      saveRoomTitle(message.padId, message.message);
     });
   }
 
@@ -70,6 +77,9 @@ exports.handleMessage = function(hook_name, context, callback){
   }
 }
 
+function saveRoomTitle(padId, message){
+  db.set("title:"+padId, message);
+}
 
 function sendToRoom(message, msg){
   var bufferAllows = true; // Todo write some buffer handling for protection and to stop DDoS -- myAuthorId exists in message.
@@ -81,4 +91,24 @@ function sendToRoom(message, msg){
     }
     , 100);
   }
+}
+
+exports.clientVars = function(hook, pad, callback){
+  var padId = pad.pad.id;
+  db.get("title:"+padId, function(err, value){
+
+    var msg = {
+      type: "COLLABROOM",
+      data: {
+        type: "CUSTOM",
+        payload: {
+          action: "recieveTitleMessage",
+          padId: padId,
+          message: value
+        }
+      }
+    }
+    sendToRoom(false, msg);
+  });
+  return callback();
 }
