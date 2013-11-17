@@ -1,9 +1,11 @@
 exports.handleClientMessage_CUSTOM = function(hook, context, cb){
   var message = context.payload.message;
   if(!$("#input_title").is(":visible")){ // if we're not editing..
-    window.document.title = message;
-    $('#title > h1').text(message);
-    $('#input_title').val(message);
+    if(message){
+      window.document.title = message;
+      $('#title > h1').text(message);
+      $('#input_title').val(message);
+    }
   }
 }
 
@@ -11,7 +13,6 @@ exports.documentReady = function(){
   var top = $('.toolbar').position().top;
   var bottom = top + $('.toolbar').height();
   $('#editorcontainerbox').css("top", top+"px");
-//  bottom = bottom+5;
   bottom = bottom+"px";
   $('.stickyChat, #settings, #importexport, #embed, #connectivity, #users').css("top", bottom);
 
