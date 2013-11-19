@@ -1,10 +1,12 @@
 exports.handleClientMessage_CUSTOM = function(hook, context, cb){
-  var message = context.payload.message;
-  if(!$("#input_title").is(":visible")){ // if we're not editing..
-    if(message){
-      window.document.title = message;
-      $('#title > h1').text(message);
-      $('#input_title').val(message);
+  if(context.payload.action == "recieveTitleMessage"){
+    var message = context.payload.message;
+    if(!$("#input_title").is(":visible")){ // if we're not editing..
+      if(message){
+        window.document.title = message;
+        $('#title > h1').text(message);
+        $('#input_title').val(message);
+      }
     }
   }
 }
