@@ -13,8 +13,10 @@ exports.documentReady = function(){
   var top = $('.toolbar').position().top;
   var bottom = top + $('.toolbar').height();
   $('#editorcontainerbox').css("top", top+"px");
-  bottom = bottom+"px";
-  $('.stickyChat, #settings, #importexport, #embed, #connectivity, #users').css("top", bottom);
+  var popupTop = bottom+4;
+  $('#settings, #importexport, #embed, #connectivity, #users').css("top", popupTop+"px");
+  var chatTop = bottom+5;
+  $('.stickyChat').css("top", chatTop+"px");
 
   $('#edit_title').click(function(){
     $('#title').hide();
