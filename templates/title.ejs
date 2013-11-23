@@ -1,7 +1,7 @@
 <div id='pad_title'>
   <div id='title'><h1>Untitled Pad</h1></div>
   <input id='input_title'>
-  <div id='edit_title'>Edit</div>
+  <div id='edit_title' class='acl-write'>Edit</div>
   <div id='save_title'><button>OK</button></div>
 </div>
 
@@ -29,6 +29,11 @@
   display:inline-block;
   display:none;
   cursor:pointer;
+}
+@media print{
+  #edit_title, #save_title{
+    display:none;
+  }
 }
 </style>
 
