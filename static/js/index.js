@@ -14,7 +14,8 @@ exports.handleClientMessage_CUSTOM = function(hook, context, cb){
 exports.documentReady = function(){
   var top = $('.toolbar').position().top;
   var bottom = top + $('.toolbar').height();
-  $('#editorcontainerbox').css("top", top+"px");
+  var containerTop = $('.toolbar').position().top + $('.toolbar').height() +5;
+  $('#editorcontainerbox').css("top", containerTop+"px");
   var popupTop = bottom+4;
   $('#settings, #importexport, #embed, #connectivity, #users').css("top", popupTop+"px");
   var chatTop = bottom+5;
