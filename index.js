@@ -1,4 +1,9 @@
-var settings = require('ep_etherpad-lite/node/utils/Settings');
+var settings = require('ep_etherpad-lite/node/utils/Settings'),
+          db = require('ep_etherpad-lite/node/db/DB').db;
+
+// Remove cache for this procedure
+db['dbSettings'].cache = 0;
+
 
 exports.clientVars = function(hook, context, callback){
   /*
@@ -50,3 +55,13 @@ exports.clientVars = function(hook, context, callback){
   */
   return callback();
 };
+
+exports.exportFileName = function(hook, padId){
+  var title = padId;
+  // Sets Export File Name to the same as the title
+  db.get("title:"+padId, function(err, value){
+    console.log("Found ", value, " for ", padId);
+    if(value) title = value;
+  });
+  return title; // this is many levels of wrong but as a proof of concept works
+}
