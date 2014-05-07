@@ -56,12 +56,12 @@ exports.clientVars = function(hook, context, callback){
   return callback();
 };
 
-exports.exportFileName = function(hook, padId){
+exports.exportFileName = function(hook, padId, callback){
   var title = padId;
   // Sets Export File Name to the same as the title
   db.get("title:"+padId, function(err, value){
     console.log("Found ", value, " for ", padId);
     if(value) title = value;
   });
-  return title; // this is many levels of wrong but as a proof of concept works
+  callback(title);
 }
