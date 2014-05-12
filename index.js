@@ -4,11 +4,6 @@ var settings = require('ep_etherpad-lite/node/utils/Settings'),
 // Remove cache for this procedure
 db['dbSettings'].cache = 0;
 
-
-exports.clientVars = function(hook, context, callback){
-  return callback();
-};
-
 exports.exportFileName = function(hook, padId, callback){
   var title = padId;
   // Sets Export File Name to the same as the title
