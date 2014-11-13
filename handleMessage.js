@@ -104,7 +104,7 @@ exports.clientVars = function(hook, pad, callback){
         payload: {
           action: "recieveTitleMessage",
           padId: padId,
-          message: value
+          message: value || padId.replace(/(.+)\$/,"")
         }
       }
     }
