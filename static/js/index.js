@@ -12,15 +12,6 @@ exports.handleClientMessage_CUSTOM = function(hook, context, cb){
 }
 
 exports.documentReady = function(){
-  var top = $('.toolbar').position().top;
-  var bottom = top + $('.toolbar').height();
-  var containerTop = $('.toolbar').position().top + $('.toolbar').height() - $('#editbar').height();
-  $('#editorcontainerbox').css("top", containerTop+"px");
-  var popupTop = bottom+4;
-  $('#settings, #importexport, #embed, #connectivity, #users').css("top", popupTop+"px");
-  var chatTop = bottom+5;
-  $('.stickyChat').css("top", chatTop+"px");
-
   $('#edit_title').click(function(){
     $('#title').hide();
     $('#input_title').show();
@@ -44,6 +35,24 @@ exports.documentReady = function(){
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
   });
+
+  window.onresize = function(e) {
+    // required as on smaller devices (<600px) we remove title
+    redrawUI();
+  };
+
+  redrawUI();
+}
+
+function redrawUI(){
+  var top = $('.toolbar').position().top;
+  var bottom = top + $('.toolbar').height();
+  var containerTop = $('.toolbar').position().top + $('.toolbar').height() - $('#editbar').height();
+  $('#editorcontainerbox').css("top", containerTop+"px");
+  var popupTop = bottom+4;
+  $('#settings, #importexport, #embed, #connectivity, #users').css("top", popupTop+"px");
+  var chatTop = bottom+5;
+  $('.stickyChat').css("top", chatTop+"px");
 }
 
 function sendTitle(){
@@ -60,4 +69,3 @@ function sendTitle(){
   }
   pad.collabClient.sendMessage(message);  // Send the chat position message to the server
 }
-
