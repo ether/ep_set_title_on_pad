@@ -30,10 +30,13 @@ exports.documentReady = function(){
     $('#save_title').hide();
   });
 
-  $('#input_title').keyup(function(){
+  $('#input_title').keyup(function(e){
     sendTitle();
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
+    if(e.keyCode === 13){
+      $('#save_title').click();
+    }
   });
 
   window.onresize = function(e) {
