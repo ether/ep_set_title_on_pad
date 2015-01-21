@@ -14,13 +14,10 @@ describe("Set Title On Pad", function(){
   it("Checked Default Pad Title is 'Untitled Pad'", function(done) {
     this.timeout(60000);
     var chrome$ = helper.padChrome$;
-    if(chrome$('#options-pageview').attr("checked")) chrome$('#options-pageview').click();
     var $editorContainer = chrome$("#editorcontainer");
     chrome$("#edit_title").click();
     chrome$("#input_title").val("JohnMcLear");
     chrome$("#save_title").click();
-
-
     helper.waitFor(function(){
       return chrome$("#pad_title > #title > h1").text() === "JohnMcLear";
     }).done(function(){
@@ -32,26 +29,18 @@ describe("Set Title On Pad", function(){
   it("Check updating pad title to 'JohnMcLear' works", function(done) {
     this.timeout(60000);
     var chrome$ = helper.padChrome$;
-    if(chrome$('#options-pageview').attr("checked")) chrome$('#options-pageview').click();
     var $editorContainer = chrome$("#editorcontainer");
     chrome$("#edit_title").click();
     chrome$("#input_title").val("JohnMcLear");
     chrome$("#save_title").click();
 
-    setTimeout(function() {
-      // go to timeslider
-      $('#iframe-container iframe').attr('src', $('#iframe-container iframe').attr('src'));
-
-      setTimeout(function() {
-        var chrome$ = $('#iframe-container iframe')[0].contentWindow.$;
-        helper.waitFor(function(){
-          return chrome$("#pad_title > #title > h1").text() === "JohnMcLear";
-        }).done(function(){
-          expect(chrome$("#pad_title > #title > h1").text()).to.be("JohnMcLear");
-          done();
-        });
-      }, 2000);
-    }, 1000);
+    helper.waitFor(function(){
+      console.log(chrome$("#pad_title > #title > h1").text());
+      return chrome$("#pad_title > #title > h1").text() === "JohnMcLear";
+    }).done(function(){
+       expect(chrome$("#pad_title > #title > h1").text()).to.be("JohnMcLear");
+       done();
+    });
 
   });
 
