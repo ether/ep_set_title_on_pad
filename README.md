@@ -3,8 +3,13 @@
 ![Screenshot](https://i.imgur.com/h2elf1z.jpg "Pad Title")
 
 ## Installation
-Install using /admin/plugins or npm install ep_set_title_on_pad
+Install using http://%youretherpad%/admin/plugins or ``npm install ep_set_title_on_pad``
 
 ## TODO
 * i18n support
-* Clean refactor <-- see .ejs file!
+
+## License
+Usual Apache 2 license.
+
+## Sponsorship
+  - [ ] This plugin requires sponsorship, if you can help get in touch!
