@@ -10,6 +10,3 @@ Install using http://%youretherpad%/admin/plugins or ``npm install ep_set_title_
 
 ## License
 Usual Apache 2 license.
-
-## Sponsorship
-  - [ ] This plugin requires sponsorship, if you can help get in touch!
