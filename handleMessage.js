@@ -16,30 +16,30 @@ db['dbSettings'].cache = 0;
 
 var buffer = {};
 
-/* 
+/*
 * Handle incoming messages from clients
 */
-exports.handleMessage = function(hook_name, context, callback){
+exports.handleMessage = async function(hook_name, context, callback){
   // Firstly ignore any request that aren't about chat
   var isTitleMessage = false;
   if(context){
     if(context.message && context.message){
       if(context.message.type === 'COLLABROOM'){
-        if(context.message.data){ 
+        if(context.message.data){
           if(context.message.data.type){
             if(context.message.data.type === 'title'){
               isTitleMessage = true;
-            } 
+            }
           }
         }
       }
     }
   }
+
   if(!isTitleMessage){
     callback(false);
     return false;
   }
-
   var message = context.message.data;
   /***
     What's available in a message?
@@ -50,24 +50,22 @@ exports.handleMessage = function(hook_name, context, callback){
      * myAuthorId -- The Id of the author who is trying to talk to the targetAuthorId
   ***/
   if(message.action === 'sendTitleMessage'){
-    authorManager.getAuthorName(message.myAuthorId, function(er, authorName){ // Get the authorname
-
-      var msg = {
-        type: "COLLABROOM",
-        data: { 
-          type: "CUSTOM",
-          payload: {
-            action: "recieveTitleMessage",
-            authorId: message.myAuthorId,
-            authorName: authorName,
-            padId: message.padId,
-            message: message.message
-          }
+    var authorName = await authorManager.getAuthorName(message.myAuthorId); // Get the authorname
+    var msg = {
+      type: "COLLABROOM",
+      data: { 
+        type: "CUSTOM",
+        payload: {
+          action: "recieveTitleMessage",
+          authorId: message.myAuthorId,
+          authorName: authorName,
+          padId: message.padId,
+          message: message.message
         }
-      };
-      sendToRoom(message, msg);
-      saveRoomTitle(message.padId, message.message);
-    });
+      }
+    };
+    sendToRoom(message, msg);
+    saveRoomTitle(message.padId, message.message);
   }
 
   if(isTitleMessage === true){
