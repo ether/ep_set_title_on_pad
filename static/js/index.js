@@ -13,10 +13,8 @@ exports.handleClientMessage_CUSTOM = function(hook, context, cb){
 
 exports.documentReady = function(){
   $('#edit_title').click(function(){
-    $('#title').hide();
-    $('#input_title').show();
-    $('#edit_title').hide();
-    $('#save_title').css("display","inline-block");
+    $('#input_title, #save_title').show();
+    $('#title, #edit_title').hide();
     $('#input_title').focus();
   });
 
@@ -24,10 +22,8 @@ exports.documentReady = function(){
     sendTitle();
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
-    $('#title').show();
-    $('#input_title').hide();
-    $('#edit_title').show();
-    $('#save_title').hide();
+    $('#title, #edit_title').show();
+    $('#input_title, #save_title').hide();
   });
 
   $('#input_title').keyup(function(e){
@@ -38,24 +34,6 @@ exports.documentReady = function(){
       $('#save_title').click();
     }
   });
-
-  window.onresize = function(e) {
-    // required as on smaller devices (<600px) we remove title
-    redrawUI();
-  };
-
-  redrawUI();
-}
-
-function redrawUI(){
-  var top = $('.toolbar').position().top;
-  var bottom = top + $('.toolbar').height();
-  var containerTop = $('.toolbar').position().top + $('.toolbar').height() - $('#editbar').height();
-  $('#editorcontainerbox').css("top", containerTop+"px");
-  var popupTop = bottom+4;
-  $('#settings, #importexport, #embed, #connectivity, #users').css("top", popupTop+"px");
-  var chatTop = bottom+5;
-  $('.stickyChat').css("top", chatTop+"px");
 }
 
 function sendTitle(){
