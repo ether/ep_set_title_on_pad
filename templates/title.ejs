@@ -1,14 +1,14 @@
 <div id='pad_title'>
   <div id='title'><h1>Untitled Pad</h1></div>
   <input id='input_title'>
-  <div id='edit_title' class='acl-write'>Edit</div>
-  <div id='save_title'><button>OK</button></div>
+  <div id='edit_title' class='acl-write buttonicon buttonicon-pencil'></div>
+  <div id='save_title'><button class="btn btn-primary">OK</button></div>
 </div>
 
 <style type="text/css">
   #pad_title {
     height:30px;
-    display: flex;
+    display: flex !important;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
@@ -16,10 +16,9 @@
     padding: 10px;
   }
   #input_title{
-    height:24px;
     display:none;
-    padding-left:2px;
     flex: 1 auto;
+    padding: 8px 10px !important;
   }
   #title{
     line-height:30px;
@@ -32,8 +31,8 @@
     line-height:160%;
   }
   #edit_title{
-    margin-left:10px;
     padding-top: 5px;
+    margin-left: 10px;
     cursor:pointer;
   }
   #save_title{
@@ -42,8 +41,7 @@
     margin-left:8px;
   }
   #save_title button{
-    height:28px;
-    padding: 0 2px 0 2px;
+    margin-right: 0 !important;
   }
   @media print{
     #edit_title, #save_title{
@@ -52,7 +50,7 @@
   }
   @media (max-width: 720px){
     #pad_title{
-      display:none;
+      display:none !important;
     }
   }
 </style>
