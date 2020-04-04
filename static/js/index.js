@@ -12,6 +12,14 @@ exports.handleClientMessage_CUSTOM = function(hook, context, cb){
 }
 
 exports.documentReady = function(){
+  if (!$('#editorcontainerbox').hasClass('flex-layout')) {
+      $.gritter.add({
+          title: "Error",
+          text: "Ep_set_title_on_pad: Please upgrade to etherpad 1.9 for this plugin to work correctly",
+          sticky: true,
+          class_name: "error"
+      })
+  }
   $('#edit_title').click(function(){
     $('#input_title, #save_title').show();
     $('#title, #edit_title').hide();
