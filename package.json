@@ -10,5 +10,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/JohnMcLear/ep_set_title_on_pad.git"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "http://etherpad.org/"
   }
 }
