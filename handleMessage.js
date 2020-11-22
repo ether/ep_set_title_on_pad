@@ -1,33 +1,32 @@
-/***
+/** *
 *
 * Responsible for negotiating messages between two clients
 *
 ****/
 
-var authorManager = require("../../src/node/db/AuthorManager"),
-padMessageHandler = require("../../src/node/handler/PadMessageHandler"),
-               db = require('ep_etherpad-lite/node/db/DB').db,
-            async = require('../../src/node_modules/async');
-
+const authorManager = require('../../src/node/db/AuthorManager');
+const padMessageHandler = require('../../src/node/handler/PadMessageHandler');
+const db = require('ep_etherpad-lite/node/db/DB').db;
+const async = require('../../src/node_modules/async');
 
 
 // Remove cache for this procedure
-db['dbSettings'].cache = 0;
+db.dbSettings.cache = 0;
 
-var buffer = {};
+const buffer = {};
 
 /*
 * Handle incoming messages from clients
 */
-exports.handleMessage = async function(hook_name, context, callback){
+exports.handleMessage = async function (hook_name, context, callback) {
   // Firstly ignore any request that aren't about chat
-  var isTitleMessage = false;
-  if(context){
-    if(context.message && context.message){
-      if(context.message.type === 'COLLABROOM'){
-        if(context.message.data){
-          if(context.message.data.type){
-            if(context.message.data.type === 'title'){
+  let isTitleMessage = false;
+  if (context) {
+    if (context.message && context.message) {
+      if (context.message.type === 'COLLABROOM') {
+        if (context.message.data) {
+          if (context.message.data.type) {
+            if (context.message.data.type === 'title') {
               isTitleMessage = true;
             }
           }
@@ -36,12 +35,12 @@ exports.handleMessage = async function(hook_name, context, callback){
     }
   }
 
-  if(!isTitleMessage){
+  if (!isTitleMessage) {
     callback(false);
     return false;
   }
-  var message = context.message.data;
-  /***
+  const message = context.message.data;
+  /** *
     What's available in a message?
      * action -- The action IE chatPosition
      * padId -- The padId of the pad both authors are on
@@ -49,64 +48,63 @@ exports.handleMessage = async function(hook_name, context, callback){
      * message -- the actual message
      * myAuthorId -- The Id of the author who is trying to talk to the targetAuthorId
   ***/
-  if(message.action === 'sendTitleMessage'){
-    var authorName = await authorManager.getAuthorName(message.myAuthorId); // Get the authorname
-    var msg = {
-      type: "COLLABROOM",
-      data: { 
-        type: "CUSTOM",
+  if (message.action === 'sendTitleMessage') {
+    const authorName = await authorManager.getAuthorName(message.myAuthorId); // Get the authorname
+    const msg = {
+      type: 'COLLABROOM',
+      data: {
+        type: 'CUSTOM',
         payload: {
-          action: "recieveTitleMessage",
+          action: 'recieveTitleMessage',
           authorId: message.myAuthorId,
-          authorName: authorName,
+          authorName,
           padId: message.padId,
-          message: message.message
-        }
-      }
+          message: message.message,
+        },
+      },
     };
     sendToRoom(message, msg);
     saveRoomTitle(message.padId, message.message);
   }
 
-  if(isTitleMessage === true){
+  if (isTitleMessage === true) {
     callback([null]);
-  }else{
+  } else {
     callback(true);
   }
+};
+
+function saveRoomTitle(padId, message) {
+  db.set(`title:${padId}`, message);
 }
 
-function saveRoomTitle(padId, message){
-  db.set("title:"+padId, message);
-}
-
-function sendToRoom(message, msg){
-  var bufferAllows = true; // Todo write some buffer handling for protection and to stop DDoS -- myAuthorId exists in message.
-  if(bufferAllows){
-    setTimeout(function(){ // This is bad..  We have to do it because ACE hasn't redrawn by the time the chat has arrived
-      padMessageHandler.handleCustomObjectMessage(msg, false, function(){
+function sendToRoom(message, msg) {
+  const bufferAllows = true; // Todo write some buffer handling for protection and to stop DDoS -- myAuthorId exists in message.
+  if (bufferAllows) {
+    setTimeout(() => { // This is bad..  We have to do it because ACE hasn't redrawn by the time the chat has arrived
+      padMessageHandler.handleCustomObjectMessage(msg, false, () => {
         // TODO: Error handling.
-      })
+      });
     }
     , 100);
   }
 }
 
-exports.clientVars = function(hook, pad, callback){
-  var padId = pad.pad.id;
-  db.get("title:"+padId, function(err, value){
-
-    var msg = {
-      type: "COLLABROOM",
+exports.clientVars = function (hook, pad, callback) {
+  const padId = pad.pad.id;
+  db.get(`title:${padId}`, (err, value) => {
+    const msg = {
+      type: 'COLLABROOM',
       data: {
-        type: "CUSTOM",
+        type: 'CUSTOM',
         payload: {
-          action: "recieveTitleMessage",
-          padId: padId,
-          message: value
-        }
-      }
-    }
+          action: 'recieveTitleMessage',
+          padId,
+          message: value,
+        },
+      },
+    };
     sendToRoom(false, msg);
   });
   return callback();
-}
+};
