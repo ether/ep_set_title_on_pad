@@ -50,6 +50,8 @@ exports.documentReady = () => {
     });
   }
 
+  $('#edit_title').show();
+
   $('#edit_title').click(() => {
     $('#input_title, #save_title').show();
     $('#title, #edit_title').hide();
