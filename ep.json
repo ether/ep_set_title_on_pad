@@ -8,7 +8,6 @@
       },
       "hooks": {
         "eejsBlock_body":"ep_set_title_on_pad/eejs",
-        "eejsBlock_styles":"ep_set_title_on_pad/eejs",
         "handleMessage": "ep_set_title_on_pad/handleMessage",
         "exportFileName":"ep_set_title_on_pad/index",
         "clientVars": "ep_set_title_on_pad/handleMessage"

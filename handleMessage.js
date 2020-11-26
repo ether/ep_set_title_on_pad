@@ -1,3 +1,5 @@
+'use strict';
+
 /** *
 *
 * Responsible for negotiating messages between two clients
@@ -7,18 +9,28 @@
 const authorManager = require('../../src/node/db/AuthorManager');
 const padMessageHandler = require('../../src/node/handler/PadMessageHandler');
 const db = require('ep_etherpad-lite/node/db/DB').db;
-const async = require('../../src/node_modules/async');
-
 
 // Remove cache for this procedure
 db.dbSettings.cache = 0;
 
-const buffer = {};
+const saveRoomTitle = (padId, message) => {
+  db.set(`title:${padId}`, message);
+};
+
+const sendToRoom = (message, msg) => {
+  // This is bad..  We have to do it because ACE hasn't redrawn by the time the chat has arrived
+  setTimeout(() => {
+    padMessageHandler.handleCustomObjectMessage(msg, false, () => {
+      // TODO: Error handling.
+    });
+  }
+  , 100);
+};
 
 /*
 * Handle incoming messages from clients
 */
-exports.handleMessage = async function (hook_name, context) {
+exports.handleMessage = async (hookName, context) => {
   // Firstly ignore any request that aren't about chat
   let isTitleMessage = false;
   if (context) {
@@ -69,23 +81,7 @@ exports.handleMessage = async function (hook_name, context) {
   }
 };
 
-function saveRoomTitle(padId, message) {
-  db.set(`title:${padId}`, message);
-}
-
-function sendToRoom(message, msg) {
-  const bufferAllows = true; // Todo write some buffer handling for protection and to stop DDoS -- myAuthorId exists in message.
-  if (bufferAllows) {
-    setTimeout(() => { // This is bad..  We have to do it because ACE hasn't redrawn by the time the chat has arrived
-      padMessageHandler.handleCustomObjectMessage(msg, false, () => {
-        // TODO: Error handling.
-      });
-    }
-    , 100);
-  }
-}
-
-exports.clientVars = function (hook, pad, callback) {
+exports.clientVars = (hook, pad, callback) => {
   const padId = pad.pad.id;
   db.get(`title:${padId}`, (err, value) => {
     const msg = {

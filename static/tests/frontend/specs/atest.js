@@ -1,7 +1,9 @@
+'use strict';
+
 describe('Set Title On Pad', function () {
   // create a new pad before each test run
   beforeEach(function (cb) {
-    testPad = helper.newPad(cb);
+    helper.newPad(cb);
     this.timeout(60000);
   });
 
@@ -13,7 +15,6 @@ describe('Set Title On Pad', function () {
   it("Checked Default Pad Title is 'Untitled Pad'", function (done) {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
-    const $editorContainer = chrome$('#editorcontainer');
     chrome$('#edit_title').click();
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
@@ -26,7 +27,6 @@ describe('Set Title On Pad', function () {
   it("Check updating pad title to 'JohnMcLear' works", function (done) {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
-    const $editorContainer = chrome$('#editorcontainer');
     chrome$('#edit_title').click();
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
