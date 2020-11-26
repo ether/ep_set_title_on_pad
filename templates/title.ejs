@@ -1,4 +1,4 @@
-<div id='pad_title'>
+<div id='pad_title' class='flex_title'>
   <div id='title'><h1 data-l10n-id="pad.loading"><a href="">Loading...</a></h1></div>
   <input id='input_title'>
   <div id='edit_title' class='acl-write buttonicon buttonicon-pencil-alt'></div>
@@ -7,7 +7,6 @@
 
 <style type="text/css">
   #pad_title {
-    display: flex !important;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
@@ -54,5 +53,11 @@
     #pad_title{
       display:none !important;
     }
+  }
+  .display_important {
+    display:none !important;
+  }
+  .flex_title{
+    display: flex !important;
   }
 </style>

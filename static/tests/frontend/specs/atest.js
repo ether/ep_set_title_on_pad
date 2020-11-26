@@ -12,14 +12,14 @@ describe('Set Title On Pad', function () {
   // Set Pad title & Ensure it's right
   // Re-open Pad and check Pad Title is stored.
 
-  it("Checked Default Pad Title is 'Untitled Pad'", function (done) {
+  it("Checked Default Pad Title is padId", function (done) {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
     chrome$('#edit_title').click();
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
-    helper.waitFor(() => chrome$('#pad_title > #title > h1').text() === 'JohnMcLear').done(() => {
-      expect(chrome$('#pad_title > #title > h1').text()).to.be('JohnMcLear');
+    helper.waitFor(() => chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear').done(() => {
+      expect(chrome$('#pad_title > #title > h1 > a').text()).to.be('JohnMcLear');
       done();
     });
   });
@@ -32,10 +32,10 @@ describe('Set Title On Pad', function () {
     chrome$('#save_title').click();
 
     helper.waitFor(() => {
-      console.log(chrome$('#pad_title > #title > h1').text());
-      return chrome$('#pad_title > #title > h1').text() === 'JohnMcLear';
+      console.log(chrome$('#pad_title > #title > h1 > a').text());
+      return chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear';
     }).done(() => {
-      expect(chrome$('#pad_title > #title > h1').text()).to.be('JohnMcLear');
+      expect(chrome$('#pad_title > #title > h1 > a').text()).to.be('JohnMcLear');
       done();
     });
   });

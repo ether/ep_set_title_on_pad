@@ -32,8 +32,13 @@ const sendTitle = () => {
 };
 
 exports.documentReady = () => {
+  $('#options-title').click(() => {
+    $('#pad_title').toggleClass('display_important');
+    $('#pad_title').toggleClass('flex_title');
+  });
+
   if(!clientVars.ep_set_title_on_pad){
-    $('#title > h1').text(clientVars.padId);
+    $('#title > h1 > a').text(clientVars.padId);
   }
 
   if (!$('#editorcontainerbox').hasClass('flex-layout')) {
