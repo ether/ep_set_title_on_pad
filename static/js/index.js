@@ -6,8 +6,10 @@ exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
     if (!$('#input_title').is(':visible')) { // if we're not editing..
       if (message) {
         window.document.title = message;
-        $('#title > h1').text(message);
+        $('#title > h1 > a').text(message);
         $('#input_title').val(message);
+        clientVars.ep_set_title_on_pad = {};
+        clientVars.ep_set_title_on_pad.title = message;
       }
     }
   }
@@ -30,10 +32,14 @@ const sendTitle = () => {
 };
 
 exports.documentReady = () => {
+  if(!clientVars.ep_set_title_on_pad){
+    $('#title > h1').text(clientVars.padId);
+  }
+
   if (!$('#editorcontainerbox').hasClass('flex-layout')) {
     $.gritter.add({
       title: 'Error',
-      text: 'Ep_set_title_on_pad: Please upgrade to etherpad 1.9 for this plugin to work correctly',
+      text: 'ep_set_title_on_pad: Please upgrade to etherpad 1.8.3+ for this plugin to work correctly',
       sticky: true,
       class_name: 'error',
     });
@@ -48,7 +54,7 @@ exports.documentReady = () => {
   $('#save_title').click(() => {
     sendTitle();
     window.document.title = $('#input_title').val();
-    $('#title > h1').text($('#input_title').val());
+    $('#title > h1 > a').text($('#input_title').val());
     $('#title, #edit_title').show();
     $('#input_title, #save_title').hide();
   });

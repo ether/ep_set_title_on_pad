@@ -1,8 +1,8 @@
 <div id='pad_title'>
-  <div id='title'><h1 data-l10n-id="ep_set_title_on_pad.untitled">Untitled Pad</h1></div>
+  <div id='title'><h1 data-l10n-id="pad.loading"><a href="">Loading...</a></h1></div>
   <input id='input_title'>
   <div id='edit_title' class='acl-write buttonicon buttonicon-pencil-alt'></div>
-  <div id='save_title'><button class="btn btn-primary" data-l10n-id="ep_set_title_on_pad.ok">OK</button></div>
+  <div id='save_title'><button class="btn btn-primary">OK</button></div>
 </div>
 
 <style type="text/css">
@@ -25,6 +25,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  #title h1 a{
+    text-decoration:none;
   }
   #title h1{
     line-height:160%;
