@@ -34,8 +34,8 @@ exports.handleMessage = async function (hook_name, context) {
       }
     }
   }
-  
-  if(!isTitleMessage){
+
+  if (!isTitleMessage) {
     return;
   }
 
