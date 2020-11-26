@@ -18,7 +18,7 @@ const buffer = {};
 /*
 * Handle incoming messages from clients
 */
-exports.handleMessage = async function (hook_name, context, callback) {
+exports.handleMessage = async function (hook_name, context) {
   // Firstly ignore any request that aren't about chat
   let isTitleMessage = false;
   if (context) {
@@ -34,11 +34,11 @@ exports.handleMessage = async function (hook_name, context, callback) {
       }
     }
   }
-
-  if (!isTitleMessage) {
-    callback(false);
-    return false;
+  
+  if(!isTitleMessage){
+    return;
   }
+
   const message = context.message.data;
   /** *
     What's available in a message?
@@ -65,12 +65,7 @@ exports.handleMessage = async function (hook_name, context, callback) {
     };
     sendToRoom(message, msg);
     saveRoomTitle(message.padId, message.message);
-  }
-
-  if (isTitleMessage === true) {
-    callback([null]);
-  } else {
-    callback(true);
+    return null; // handled by plugin
   }
 };
 
