@@ -1,10 +1,10 @@
 'use strict';
 
-/** *
-*
-* Responsible for negotiating messages between two clients
-*
-****/
+/* **
+ *
+ * Responsible for negotiating messages between two clients
+ *
+ *** */
 
 const authorManager = require('ep_etherpad-lite/node/db/AuthorManager');
 const padMessageHandler = require('ep_etherpad-lite/node/handler/PadMessageHandler');
@@ -28,8 +28,8 @@ const sendToRoom = (message, msg) => {
 };
 
 /*
-* Handle incoming messages from clients
-*/
+ * Handle incoming messages from clients
+ */
 exports.handleMessage = async (hookName, context, cb) => {
   // Firstly ignore any request that aren't about chat
   let message = false;
@@ -42,14 +42,14 @@ exports.handleMessage = async (hookName, context, cb) => {
 
   if (!message) return;
 
-  /** *
-    What's available in a message?
-     * action -- The action IE chatPosition
-     * padId -- The padId of the pad both authors are on
-     * targetAuthorId -- The Id of the author this user wants to talk to
-     * message -- the actual message
-     * myAuthorId -- The Id of the author who is trying to talk to the targetAuthorId
-  ***/
+  /* **
+   * What's available in a message?
+   *   - action -- The action IE chatPosition
+   *   - padId -- The padId of the pad both authors are on
+   *   - targetAuthorId -- The Id of the author this user wants to talk to
+   *   - message -- the actual message
+   *   - myAuthorId -- The Id of the author who is trying to talk to the targetAuthorId
+   ** */
   if (message.action === 'sendTitleMessage') {
     const authorName = await authorManager.getAuthorName(message.myAuthorId); // Get the authorname
     const msg = {
