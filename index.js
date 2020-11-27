@@ -20,4 +20,3 @@ exports.eejsBlock_mySettings = (hookName, args, cb) => {
   args.content += eejs.require('ep_set_title_on_pad/templates/settings.ejs');
   return cb();
 };
-

@@ -12,7 +12,7 @@ describe('Set Title On Pad', function () {
   // Set Pad title & Ensure it's right
   // Re-open Pad and check Pad Title is stored.
 
-  it("Checked Default Pad Title is padId", function (done) {
+  it('Checked Default Pad Title is padId', function (done) {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
     chrome$('#edit_title').click();

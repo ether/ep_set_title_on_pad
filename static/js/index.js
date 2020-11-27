@@ -37,7 +37,7 @@ exports.documentReady = () => {
     $('#pad_title').toggleClass('flex_title');
   });
 
-  if(!clientVars.ep_set_title_on_pad){
+  if (!clientVars.ep_set_title_on_pad) {
     $('#title > h1 > a').text(clientVars.padId);
   }
 
