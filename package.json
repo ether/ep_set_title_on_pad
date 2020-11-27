@@ -4,6 +4,11 @@
   "version": "0.5.14",
   "license": "Apache-2.0",
   "author": "johnyma22 (John McLear) <john@mclear.co.uk>",
+  "keywords": [
+    "ep",
+    "etherpad",
+    "plugin"
+  ],
   "dependencies": {},
   "engines": {
     "node": ">= 10.0.1"
