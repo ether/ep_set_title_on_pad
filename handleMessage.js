@@ -6,8 +6,8 @@
 *
 ****/
 
-const authorManager = require('../../src/node/db/AuthorManager');
-const padMessageHandler = require('../../src/node/handler/PadMessageHandler');
+const authorManager = require('ep_etherpad-lite/node/db/AuthorManager');
+const padMessageHandler = require('ep_etherpad-lite/handler/PadMessageHandler');
 const db = require('ep_etherpad-lite/node/db/DB').db;
 
 // Remove cache for this procedure

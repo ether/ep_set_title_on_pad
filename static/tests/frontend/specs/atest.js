@@ -18,7 +18,8 @@ describe('Set Title On Pad', function () {
     chrome$('#edit_title').click();
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
-    helper.waitFor(() => chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear').done(() => {
+    helper.waitFor(
+        () => chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear').done(() => {
       expect(chrome$('#pad_title > #title > h1 > a').text()).to.be('JohnMcLear');
       done();
     });
