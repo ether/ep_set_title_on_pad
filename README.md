@@ -1,3 +1,5 @@
+![Publish Status](https://github.com/ether/ep_set_title_on_pad/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/ether/ep_set_title_on_pad/workflows/Backend%20tests/badge.svg)
+
 # Titles for your pads
 
 ![Screenshot](https://user-images.githubusercontent.com/220864/100353775-f25b8600-2fe6-11eb-84cc-0ab13fe04bf6.PNG)
