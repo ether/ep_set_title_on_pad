@@ -40,9 +40,7 @@ exports.handleMessage = async (hookName, context, cb) => {
     }
   }
 
-  if (!message) {
-    cb();
-  }
+  if (!message) return;
 
   /** *
     What's available in a message?
@@ -69,7 +67,7 @@ exports.handleMessage = async (hookName, context, cb) => {
     };
     sendToRoom(message, msg);
     saveRoomTitle(message.padId, message.message);
-    cb(null); // handled by plugin
+    return null; // handled by plugin
   }
 };
 
