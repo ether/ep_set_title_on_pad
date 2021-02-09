@@ -30,28 +30,20 @@ const sendToRoom = (message, msg) => {
 /*
 * Handle incoming messages from clients
 */
-exports.handleMessage = async (hookName, context) => {
+exports.handleMessage = async (hookName, context, cb) => {
   // Firstly ignore any request that aren't about chat
-  let isTitleMessage = false;
-  if (context) {
-    if (context.message && context.message) {
-      if (context.message.type === 'COLLABROOM') {
-        if (context.message.data) {
-          if (context.message.data.type) {
-            if (context.message.data.type === 'title') {
-              isTitleMessage = true;
-            }
-          }
-        }
-      }
+  let message = false;
+  if (context.message && context.message.type && context.message.type === 'COLLABROOM') {
+    if (context.message.data && context.message.data.type &&
+        context.message.data.type === 'title') {
+      message = context.message.data;
     }
   }
 
-  if (!isTitleMessage) {
-    return;
+  if (!message) {
+    cb();
   }
 
-  const message = context.message.data;
   /** *
     What's available in a message?
      * action -- The action IE chatPosition
@@ -77,7 +69,7 @@ exports.handleMessage = async (hookName, context) => {
     };
     sendToRoom(message, msg);
     saveRoomTitle(message.padId, message.message);
-    return null; // handled by plugin
+    cb(null); // handled by plugin
   }
 };
 
@@ -97,5 +89,5 @@ exports.clientVars = (hook, pad, callback) => {
     };
     sendToRoom(false, msg);
   });
-  return callback();
+  callback();
 };
