@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Okras",
 			"Roovinn"
 		]
 	},
-	"ep_set_title_on_pad.ok": "Хорошо"
+	"ep_set_title_on_pad.ok": "Хорошо",
+	"ep_set_title_on_pad.show_title": "Показать заголовок"
 }
