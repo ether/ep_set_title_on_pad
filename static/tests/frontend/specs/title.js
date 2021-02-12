@@ -25,14 +25,20 @@ describe('Set Title On Pad', function () {
     });
   });
 
-  it("Check updating pad title to 'JohnMcLear' works", async function () {
+  it("Check updating pad title to 'JohnMcLear' works", function (done) {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
     chrome$('#edit_title').click();
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
 
-    await helper.waitForPromise(
-        () => chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear', 5000);
+    helper.waitFor(() => {
+      console.log(chrome$('#pad_title > #title > h1 > a').text());
+      return chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear';
+    }).done(() => {
+      expect(chrome$('#pad_title > #title > h1 > a').text()).to.be('JohnMcLear');
+      done();
+    });
   });
 });
+
