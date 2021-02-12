@@ -25,7 +25,7 @@ describe('Set Title On Pad', function () {
     });
   });
 
-  it("Check updating pad title to 'JohnMcLear' works", function () {
+  it("Check updating pad title to 'JohnMcLear' works", async function () {
     this.timeout(60000);
     const chrome$ = helper.padChrome$;
     chrome$('#edit_title').click();
