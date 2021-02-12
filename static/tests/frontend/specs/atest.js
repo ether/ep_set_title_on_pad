@@ -32,12 +32,7 @@ describe('Set Title On Pad', function () {
     chrome$('#input_title').val('JohnMcLear');
     chrome$('#save_title').click();
 
-    helper.waitFor(() => {
-      console.log(chrome$('#pad_title > #title > h1 > a').text());
-      return chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear';
-    }).done(() => {
-      expect(chrome$('#pad_title > #title > h1 > a').text()).to.be('JohnMcLear');
-      done();
-    });
+    await helper.waitForPromise(
+        () => chrome$('#pad_title > #title > h1 > a').text() === 'JohnMcLear', 5000);
   });
 });
