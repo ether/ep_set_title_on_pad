@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Andibecker",
 			"Dr Lotus Black"
 		]
 	},
-	"ep_set_title_on_pad.ok": "အိုကေ"
+	"ep_set_title_on_pad.ok": "အိုကေ",
+	"ep_set_title_on_pad.show_title": "ခေါင်းစဉ်ပြပါ"
 }
