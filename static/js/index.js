@@ -7,6 +7,7 @@ exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
       if (message) {
         window.document.title = message;
         $('#title > h1 > a').text(message);
+        $('#title > h1 > a').removeAttr('data-l10n-id');
         $('#input_title').val(message);
         clientVars.ep_set_title_on_pad = {};
         clientVars.ep_set_title_on_pad.title = message;
@@ -39,6 +40,7 @@ exports.documentReady = () => {
 
   if (!clientVars.ep_set_title_on_pad) {
     $('#title > h1 > a').text(clientVars.padId);
+    $('#title > h1 > a').removeAttr('data-l10n-id');
   }
 
   if (!$('#editorcontainerbox').hasClass('flex-layout')) {
@@ -62,6 +64,7 @@ exports.documentReady = () => {
     sendTitle();
     window.document.title = $('#input_title').val();
     $('#title > h1 > a').text($('#input_title').val());
+    $('#title > h1 > a').removeAttr('data-l10n-id');
     $('#title, #edit_title').show();
     $('#input_title, #save_title').hide();
   });
