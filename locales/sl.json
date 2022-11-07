@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Eleassar",
 			"HairyFotr"
 		]
 	},
-	"ep_set_title_on_pad.ok": "V redu"
+	"ep_set_title_on_pad.ok": "V redu",
+	"ep_set_title_on_pad.show_title": "Pokaži naslov"
 }
