@@ -3,14 +3,14 @@
 exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
   if (context.payload.action === 'recieveTitleMessage') {
     const message = context.payload.message;
-    const input_title = $('#input_title')
-    const title_tag = $('#title > h1 > a')
-    if (!input_title.is(':visible')) { // if we're not editing..
+    const padTitleElement = $('#input_title');
+    const titleTag = $('#title > h1 > a');
+    if (!padTitleElement.is(':visible')) { // if we're not editing..
       if (message) {
         window.document.title = message;
-        title_tag.text(message);
-        title_tag.removeAttr('data-l10n-id');
-        input_title.val(message);
+        titleTag.text(message);
+        titleTag.removeAttr('data-l10n-id');
+        padTitleElement.val(message);
         clientVars.ep_set_title_on_pad = {};
         clientVars.ep_set_title_on_pad.title = message;
       }
@@ -50,7 +50,7 @@ exports.documentReady = () => {
       title: 'Error',
       text: 'ep_set_title_on_pad: Upgrade to etherpad 1.8.3+ for this plugin to work correctly',
       sticky: true,
-      class_name: 'error',
+      class_name: 'error', //eslint-disable-line camelcase
     });
   }
 
@@ -71,7 +71,7 @@ exports.documentReady = () => {
     $('#input_title, #save_title').hide();
   });
 
-  function debounce(func, timeout = 300){
+  function debounce(func, timeout = 300) {
     let timer;
     return (...args) => {
       clearTimeout(timer);
@@ -80,7 +80,7 @@ exports.documentReady = () => {
   }
 
   $('#input_title').keyup((e) => {
-    debounce(sendTitle)
+    debounce(sendTitle);
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
     if (e.keyCode === 13) {
