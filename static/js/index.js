@@ -50,7 +50,7 @@ exports.documentReady = () => {
       title: 'Error',
       text: 'ep_set_title_on_pad: Upgrade to etherpad 1.8.3+ for this plugin to work correctly',
       sticky: true,
-      class_name: 'error', //eslint-disable-line camelcase
+      class_name: 'error', // eslint-disable-line camelcase
     });
   }
 
