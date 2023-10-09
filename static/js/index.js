@@ -3,12 +3,14 @@
 exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
   if (context.payload.action === 'recieveTitleMessage') {
     const message = context.payload.message;
-    if (!$('#input_title').is(':visible')) { // if we're not editing..
+    const input_title = $('#input_title')
+    const title_tag = $('#title > h1 > a')
+    if (!input_title.is(':visible')) { // if we're not editing..
       if (message) {
         window.document.title = message;
-        $('#title > h1 > a').text(message);
-        $('#title > h1 > a').removeAttr('data-l10n-id');
-        $('#input_title').val(message);
+        title_tag.text(message);
+        title_tag.removeAttr('data-l10n-id');
+        input_title.val(message);
         clientVars.ep_set_title_on_pad = {};
         clientVars.ep_set_title_on_pad.title = message;
       }
@@ -69,8 +71,16 @@ exports.documentReady = () => {
     $('#input_title, #save_title').hide();
   });
 
+  function debounce(func, timeout = 300){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
   $('#input_title').keyup((e) => {
-    sendTitle();
+    debounce(sendTitle)
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
     if (e.keyCode === 13) {
