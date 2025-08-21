@@ -1,7 +1,9 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"McDutchie"
+		]
 	},
-	"ep_set_title_on_pad.ok": "Ok",
-	"ep_set_title_on_pad.show_title": "Toon titel"
+	"ep_set_title_on_pad.ok": "OK",
+	"ep_set_title_on_pad.show_title": "Titel weergeven"
 }
