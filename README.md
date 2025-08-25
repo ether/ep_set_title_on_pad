@@ -1,4 +1,5 @@
-![Publish Status](https://github.com/ether/ep_set_title_on_pad/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/ether/ep_set_title_on_pad/workflows/Backend%20tests/badge.svg)
+[![Publish Status](https://github.com/ether/ep_set_title_on_pad/workflows/Node.js%20Package/badge.svg)](https://github.com/ether/ep_set_title_on_pad/actions/workflows/test-and-release.yml) 
+[![Backend Tests Status](https://github.com/ether/ep_set_title_on_pad/workflows/Backend%20tests/badge.svg)](https://github.com/ether/ep_set_title_on_pad/actions/workflows/backend-tests.yml)
 
 # ep\_set\_title\_on\_pad: Titles for your pads
 
