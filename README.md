@@ -7,8 +7,7 @@
 
 ## Installation
 
-Install using http://%youretherpad%/admin/plugins or `npm install
-ep_set_title_on_pad`.
+Install using http://%youretherpad%/admin/plugins or `pnpm run plugins install ep_set_title_on_pad`.
 
 ## Compatibility
 
