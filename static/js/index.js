@@ -79,8 +79,10 @@ exports.documentReady = () => {
     };
   }
 
+  const debouncedSendTitle = debounce(sendTitle);
+
   $('#input_title').keyup((e) => {
-    debounce(sendTitle);
+    debouncedSendTitle();
     window.document.title = $('#input_title').val();
     $('#title > h1').text($('#input_title').val());
     if (e.keyCode === 13) {
