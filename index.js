@@ -12,8 +12,8 @@ exports.exportFileName = (hook, padId, callback) => {
   db.get(`title:${padId}`, (err, value) => {
     console.log('Found ', value, ' for ', padId);
     if (value) title = value;
+    callback(title);
   });
-  callback(title);
 };
 
 exports.eejsBlock_mySettings = (hookName, args, cb) => {
