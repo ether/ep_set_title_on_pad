@@ -20,3 +20,12 @@ exports.eejsBlock_mySettings = (hookName, args, cb) => {
   args.content += eejs.require('ep_set_title_on_pad/templates/settings.ejs');
   cb();
 };
+
+exports.padRemove = async (hookName, {pad}) => {
+  await db.remove(`title:${pad.id}`);
+};
+
+exports.padCopy = async (hookName, {srcPad, dstPad}) => {
+  const title = await db.get(`title:${srcPad.id}`);
+  if (title) await db.set(`title:${dstPad.id}`, title);
+};

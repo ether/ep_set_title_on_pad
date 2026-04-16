@@ -11,7 +11,9 @@
         "handleMessage": "ep_set_title_on_pad/handleMessage",
         "eejsBlock_mySettings": "ep_set_title_on_pad/index",
         "exportFileName":"ep_set_title_on_pad/index",
-        "clientVars": "ep_set_title_on_pad/handleMessage"
+        "clientVars": "ep_set_title_on_pad/handleMessage",
+        "padRemove": "ep_set_title_on_pad/index",
+        "padCopy": "ep_set_title_on_pad/index"
       }
     }
   ]
