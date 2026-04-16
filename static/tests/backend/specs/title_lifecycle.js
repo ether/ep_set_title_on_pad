@@ -20,7 +20,8 @@ describe(__filename, function () {
 
     await pad.remove();
 
-    assert.equal(await DB.get(titleKey(padId)), null);
+    // Different DB drivers return either null or undefined for missing keys.
+    assert(await DB.get(titleKey(padId)) == null);
   });
 
   it('copies the title when the pad is copied', async function () {
