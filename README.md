@@ -1,4 +1,4 @@
-# ep_set_title_on_pad
+# Derive Pad Title from its First Line for Etherpad
 
 [![Demo](demo.gif)](https://github.com/ether/ep_set_title_on_pad/actions/workflows/test-and-release.yml) 
 [![Backend Tests Status](https://github.com/ether/ep_set_title_on_pad/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/ether/ep_set_title_on_pad/actions/workflows/test-and-release.yml)
