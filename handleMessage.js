@@ -71,21 +71,5 @@ exports.handleMessage = async (hookName, context, cb) => {
   }
 };
 
-exports.clientVars = (hook, pad, callback) => {
-  const padId = pad.pad.id;
-  db.get(`title:${padId}`, (err, value) => {
-    const msg = {
-      type: 'COLLABROOM',
-      data: {
-        type: 'CUSTOM',
-        payload: {
-          action: 'recieveTitleMessage',
-          padId,
-          message: value,
-        },
-      },
-    };
-    sendToRoom(false, msg);
-  });
-  callback();
-};
+// clientVars handler moved to index.js so it can compose with padToggle's
+// clientVars (only one clientVars hook can be registered per part in ep.json).

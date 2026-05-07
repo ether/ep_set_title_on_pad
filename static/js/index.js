@@ -1,5 +1,27 @@
 'use strict';
 
+// Sub-path import keeps the client bundle clean. Importing the top-level
+// `ep_plugin_helpers` index pulls in every helper's getters; some reach
+// server-only modules (eejs, Settings) which esbuild can't resolve for the
+// browser.
+const {padToggle} = require('ep_plugin_helpers/pad-toggle');
+
+// Same config as the server-side instance — must agree on pluginName,
+// settingId, and l10nId for the checkbox ids and clientVars lookup to line up.
+const titleToggle = padToggle({
+  pluginName: 'ep_set_title_on_pad',
+  settingId: 'title',
+  l10nId: 'ep_set_title_on_pad.show_title',
+  defaultLabel: 'Show Title',
+  defaultEnabled: true,
+});
+
+// Re-export so the helper sees pad-wide broadcasts and refreshes our state
+// when another user toggles the pad-wide checkbox.
+exports.handleClientMessage_CLIENT_MESSAGE = titleToggle.handleClientMessage_CLIENT_MESSAGE;
+
+// Existing CUSTOM message handler for the live title-text broadcast (separate
+// from the padToggle show/hide checkbox).
 exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
   if (context.payload.action === 'recieveTitleMessage') {
     const message = context.payload.message;
@@ -34,10 +56,21 @@ const sendTitle = () => {
   pad.collabClient.sendMessage(message); // Send the chat position message to the server
 };
 
+const applyTitleVisibility = (enabled) => {
+  const $padTitle = $('#pad_title');
+  if (enabled) {
+    $padTitle.removeClass('display_important').addClass('flex_title');
+  } else {
+    $padTitle.removeClass('flex_title').addClass('display_important');
+  }
+};
+
 exports.documentReady = () => {
-  $('#options-title').click(() => {
-    $('#pad_title').toggleClass('display_important');
-    $('#pad_title').toggleClass('flex_title');
+  // padToggle owns the checkbox, cookie, pad-wide broadcast, and enforce
+  // logic. onChange fires on initial load and on every subsequent change
+  // (user toggle, pad-wide broadcast, enforceSettings).
+  titleToggle.init({
+    onChange: (enabled) => { applyTitleVisibility(enabled); },
   });
 
   if (!clientVars.ep_set_title_on_pad) {

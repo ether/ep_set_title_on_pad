@@ -4,14 +4,17 @@
       "name": "set_title_on_pad",
       "client_hooks": {
         "postAceInit": "ep_set_title_on_pad/static/js/index:documentReady",
-        "handleClientMessage_CUSTOM": "ep_set_title_on_pad/static/js/index"
+        "handleClientMessage_CUSTOM": "ep_set_title_on_pad/static/js/index",
+        "handleClientMessage_CLIENT_MESSAGE": "ep_set_title_on_pad/static/js/index"
       },
       "hooks": {
-        "eejsBlock_body":"ep_set_title_on_pad/eejs",
+        "eejsBlock_body": "ep_set_title_on_pad/eejs",
         "handleMessage": "ep_set_title_on_pad/handleMessage",
+        "loadSettings": "ep_set_title_on_pad/index",
+        "clientVars": "ep_set_title_on_pad/index",
         "eejsBlock_mySettings": "ep_set_title_on_pad/index",
-        "exportFileName":"ep_set_title_on_pad/index",
-        "clientVars": "ep_set_title_on_pad/handleMessage",
+        "eejsBlock_padSettings": "ep_set_title_on_pad/index",
+        "exportFileName": "ep_set_title_on_pad/index",
         "padRemove": "ep_set_title_on_pad/index",
         "padCopy": "ep_set_title_on_pad/index"
       }
