@@ -1,5 +1,7 @@
 {
   "ep_set_title_on_pad.ok" : "OK",
-  "ep_set_title_on_pad.show_title" : "Show Title"
+  "ep_set_title_on_pad.show_title" : "Show Title",
+  "ep_set_title_on_pad.input_aria" : "Pad title",
+  "ep_set_title_on_pad.edit_aria" : "Edit pad title",
+  "ep_set_title_on_pad.save_aria" : "Save pad title"
 }
-
