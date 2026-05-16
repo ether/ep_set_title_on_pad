@@ -6,20 +6,29 @@
 </div>
 
 <style type="text/css">
+  /* Bar height kept tight so the body-level title doesn't eat enough of the
+     editor viewport to break etherpad's auto-scroll on Enter (the bar pushes
+     the iframe down without the editor's scroll calculation accounting for
+     it — see ep_set_title_on_pad CI history vs etherpad-lite #7611). */
   #pad_title {
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
     margin: 0 !important;
-    padding: 3px 10px;
+    padding: 0 10px;
+    height: 22px;
+    box-sizing: border-box;
+    line-height: 21px;
   }
   #input_title{
     display:none;
     flex: 1 auto;
-    padding: 8px 10px !important;
+    padding: 2px 8px !important;
+    height: 18px;
+    box-sizing: border-box;
   }
   #title{
-    line-height:30px;
+    line-height: 21px;
     max-width: calc(100% - 30px);
     white-space: nowrap;
     overflow: hidden;
@@ -29,18 +38,24 @@
     text-decoration:none;
   }
   #title h1{
-    line-height:160%;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 21px;
+    font-weight: 600;
   }
   #edit_title{
-    padding-top: 5px;
+    padding: 0;
     margin-left: 10px;
     cursor:pointer;
     display:none;
+    line-height: 21px;
   }
   #save_title{
     display:none;
     cursor:pointer;
     margin-left:8px;
+    line-height: 21px;
   }
   #save_title button{
     margin-right: 0 !important;
