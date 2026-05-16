@@ -1,11 +1,8 @@
 'use strict';
 
-const db = require('ep_etherpad-lite/node/db/DB').db;
+const db = require('ep_etherpad-lite/node/db/DB');
 const padMessageHandler = require('ep_etherpad-lite/node/handler/PadMessageHandler');
 const {padToggle} = require('ep_plugin_helpers/pad-toggle-server');
-
-// Remove cache for this procedure
-db.dbSettings.cache = 0;
 
 // Parallel User Settings + Pad Wide Settings checkboxes for "Show Title".
 // Helper owns the storage, broadcast, enforce, and i18n wiring. The pad
@@ -31,35 +28,42 @@ exports.eejsBlock_padSettings = titleToggle.eejsBlock_padSettings;
 exports.clientVars = async (hookName, context) => {
   const padId = context.pad.id;
   // Fire the saved-title broadcast (legacy behavior — kept verbatim).
-  db.get(`title:${padId}`, (err, value) => {
-    const msg = {
-      type: 'COLLABROOM',
-      data: {
-        type: 'CUSTOM',
-        payload: {
-          action: 'recieveTitleMessage',
-          padId,
-          message: value,
-        },
+  let value;
+  try {
+    value = await db.get(`title:${padId}`);
+  } catch (err) {
+    console.error('ep_set_title_on_pad clientVars db.get failed:', err);
+  }
+  const msg = {
+    type: 'COLLABROOM',
+    data: {
+      type: 'CUSTOM',
+      payload: {
+        action: 'recieveTitleMessage',
+        padId,
+        message: value,
       },
-    };
-    setTimeout(() => {
-      padMessageHandler.handleCustomObjectMessage(msg, false, () => {});
-    }, 100);
-  });
+    },
+  };
+  setTimeout(() => {
+    padMessageHandler.handleCustomObjectMessage(msg, false, () => {});
+  }, 100);
   // Return the padToggle's clientVars contribution so the helper picks up
   // pad-wide state on the client.
   return await titleToggle.clientVars(hookName, context);
 };
 
-exports.exportFileName = (hook, padId, callback) => {
-  let title = padId;
-  // Sets Export File Name to the same as the title
-  db.get(`title:${padId}`, (err, value) => {
-    console.log('Found ', value, ' for ', padId);
-    if (value) title = value;
-    callback(title);
-  });
+exports.exportFileName = async (hook, padId) => {
+  // ueberdb2 v6 is promise-only; the legacy db.get(key, cb) callback never
+  // fires, which previously hung the export pipeline when the export hook's
+  // callback was placed inside it.
+  try {
+    const value = await db.get(`title:${padId}`);
+    if (value) return value;
+  } catch (err) {
+    console.error('ep_set_title_on_pad exportFileName db.get failed:', err);
+  }
+  return padId;
 };
 
 exports.padRemove = async (hookName, {pad}) => {

@@ -8,13 +8,10 @@
 
 const authorManager = require('ep_etherpad-lite/node/db/AuthorManager');
 const padMessageHandler = require('ep_etherpad-lite/node/handler/PadMessageHandler');
-const db = require('ep_etherpad-lite/node/db/DB').db;
+const db = require('ep_etherpad-lite/node/db/DB');
 
-// Remove cache for this procedure
-db.dbSettings.cache = 0;
-
-const saveRoomTitle = (padId, message) => {
-  db.set(`title:${padId}`, message);
+const saveRoomTitle = async (padId, message) => {
+  await db.set(`title:${padId}`, message);
 };
 
 const sendToRoom = (message, msg) => {
@@ -66,7 +63,7 @@ exports.handleMessage = async (hookName, context, cb) => {
       },
     };
     sendToRoom(message, msg);
-    saveRoomTitle(message.padId, message.message);
+    await saveRoomTitle(message.padId, message.message);
     return null; // handled by plugin
   }
 };
