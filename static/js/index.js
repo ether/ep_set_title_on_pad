@@ -20,18 +20,33 @@ const titleToggle = padToggle({
 // when another user toggles the pad-wide checkbox.
 exports.handleClientMessage_CLIENT_MESSAGE = titleToggle.handleClientMessage_CLIENT_MESSAGE;
 
+// Centralised so the three call sites that swap the loading text for a real
+// title can't drift apart on a11y cleanup. html10n auto-populates aria-label
+// (etherpad PR #7584) when it translates a data-l10n-id node; if we leave
+// those attributes behind, screen readers keep announcing the stale value
+// (e.g. "Loading..." or the previous title). See ether/etherpad#7255.
+const applyLiveTitle = (text) => {
+  const titleTag = $('#title > h1 > a');
+  titleTag.text(text);
+  titleTag.removeAttr('data-l10n-id');
+  // Defensive: html10n now places its auto-aria-label on the inner <span>
+  // that holds data-l10n-id, but .text() above replaces all children with a
+  // single text node, so neither the span nor any stale attributes survive
+  // — still clean these in case an older template version is in play.
+  titleTag.removeAttr('aria-label');
+  titleTag.removeAttr('data-l10n-aria-label');
+};
+
 // Existing CUSTOM message handler for the live title-text broadcast (separate
 // from the padToggle show/hide checkbox).
 exports.handleClientMessage_CUSTOM = (hook, context, cb) => {
   if (context.payload.action === 'recieveTitleMessage') {
     const message = context.payload.message;
     const padTitleElement = $('#input_title');
-    const titleTag = $('#title > h1 > a');
     if (!padTitleElement.is(':visible')) { // if we're not editing..
       if (message) {
         window.document.title = message;
-        titleTag.text(message);
-        titleTag.removeAttr('data-l10n-id');
+        applyLiveTitle(message);
         padTitleElement.val(message);
         clientVars.ep_set_title_on_pad = {};
         clientVars.ep_set_title_on_pad.title = message;
@@ -74,8 +89,7 @@ exports.documentReady = () => {
   });
 
   if (!clientVars.ep_set_title_on_pad) {
-    $('#title > h1 > a').text(clientVars.padId);
-    $('#title > h1 > a').removeAttr('data-l10n-id');
+    applyLiveTitle(clientVars.padId);
   }
 
   if (!$('#editorcontainerbox').hasClass('flex-layout')) {
@@ -98,8 +112,7 @@ exports.documentReady = () => {
   $('#save_title').click(() => {
     sendTitle();
     window.document.title = $('#input_title').val();
-    $('#title > h1 > a').text($('#input_title').val());
-    $('#title > h1 > a').removeAttr('data-l10n-id');
+    applyLiveTitle($('#input_title').val());
     $('#title, #edit_title').show();
     $('#input_title, #save_title').hide();
   });

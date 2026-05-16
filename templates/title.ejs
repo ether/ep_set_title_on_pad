@@ -1,8 +1,27 @@
 <div id='pad_title' class='flex_title'>
-  <div id='title'><h1><a href="" data-l10n-id="pad.loading">Loading...</a></h1></div>
-  <input id='input_title'>
-  <div id='edit_title' class='acl-write buttonicon buttonicon-pencil-alt'></div>
-  <div id='save_title'><button class="btn btn-primary">OK</button></div>
+  <!-- Visually-hidden labels referenced by aria-labelledby below. They live
+       inside #pad_title so the layout doesn't change, but `position: absolute`
+       + clip pulls them out of the flexbox flow. See ether/etherpad#7255. -->
+  <span id='input_title_label' class='ep_set_title_sr_only'
+        data-l10n-id="ep_set_title_on_pad.input_aria">Pad title</span>
+  <span id='edit_title_label' class='ep_set_title_sr_only'
+        data-l10n-id="ep_set_title_on_pad.edit_aria">Edit pad title</span>
+  <span id='save_title_label' class='ep_set_title_sr_only'
+        data-l10n-id="ep_set_title_on_pad.save_aria">Save pad title</span>
+
+  <!-- Loading text lives in a <span> so html10n's aria-label auto-population
+       (introduced in etherpad PR #7584) targets the span, not the <a>. When
+       the live title arrives the <a>'s contents are replaced wholesale, so
+       there is no stale aria-label="Loading..." left behind on the anchor. -->
+  <div id='title'><h1><a href=""><span data-l10n-id="pad.loading">Loading...</span></a></h1></div>
+  <input id='input_title' type="text" aria-labelledby="input_title_label">
+  <button type="button" id='edit_title' class='acl-write buttonicon buttonicon-pencil-alt'
+          aria-labelledby="edit_title_label"></button>
+  <div id='save_title'>
+    <button type="button" class="btn btn-primary"
+            aria-labelledby="save_title_label"
+            data-l10n-id="ep_set_title_on_pad.ok">OK</button>
+  </div>
 </div>
 
 <style type="text/css">
@@ -31,9 +50,17 @@
   #title h1{
     line-height:160%;
   }
+  /* Reset the native <button> chrome introduced when we promoted #edit_title
+     from <div> to <button> for accessibility. Keeps the pencil glyph centered
+     and inheriting the toolbar's color, matching pre-7255 visual behaviour. */
   #edit_title{
-    padding-top: 5px;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 5px 0 0 0;
     margin-left: 10px;
+    color: inherit;
+    font: inherit;
     cursor:pointer;
     display:none;
   }
@@ -44,6 +71,20 @@
   }
   #save_title button{
     margin-right: 0 !important;
+  }
+  /* Visually hide accessible-name labels without removing them from the
+     accessibility tree. Same pattern as Tailwind/Bootstrap `sr-only`,
+     scoped so we don't collide with host-app utility classes. */
+  .ep_set_title_sr_only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   @media print{
     #edit_title, #save_title{
