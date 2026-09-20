@@ -6,30 +6,34 @@
 </div>
 
 <style type="text/css">
-  /* Bar height kept tight so the body-level title doesn't eat enough of the
-     editor viewport to break etherpad's auto-scroll on Enter (the bar pushes
-     the iframe down without the editor's scroll calculation accounting for
-     it — see ep_set_title_on_pad CI history vs etherpad-lite #7611). */
+  /* Sizes are expressed in rem so the bar tracks etherpad's base font size
+     (`html { font-size: 15px }` in core's pad.css) instead of hard-coding
+     pixel values that no longer match the skin.
+
+     History: this bar was squeezed down to 16px tall / 11px text to keep
+     etherpad's `enter.spec.ts: enter is always visible after event` green —
+     that test measured the last line against the *browser* viewport, so any
+     chrome above the editor iframe failed it. Core dropped that assertion as
+     inherently fragile (ether/etherpad#7845), so the bar no longer has to be
+     unreadably small. See ether/ep_set_title_on_pad#155. */
   #pad_title {
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
     margin: 0 !important;
-    padding: 0 10px;
-    height: 16px;
+    padding: 0.2rem 10px;
+    min-height: 2.2rem;
     box-sizing: border-box;
-    line-height: 15px;
   }
   #input_title{
     display:none;
     flex: 1 auto;
-    padding: 0 8px !important;
-    height: 14px;
+    padding: 0.2rem 8px !important;
+    height: 1.8rem;
     box-sizing: border-box;
-    font-size: 11px;
+    font-size: 1rem;
   }
   #title{
-    line-height: 15px;
     max-width: calc(100% - 30px);
     white-space: nowrap;
     overflow: hidden;
@@ -41,8 +45,8 @@
   #title h1{
     margin: 0;
     padding: 0;
-    font-size: 11px;
-    line-height: 15px;
+    font-size: 1.1rem;
+    line-height: 1.5;
     font-weight: 600;
   }
   #edit_title{
@@ -50,13 +54,14 @@
     margin-left: 10px;
     cursor:pointer;
     display:none;
-    line-height: 15px;
+    font-size: 1rem;
+    line-height: 1;
   }
   #save_title{
     display:none;
     cursor:pointer;
     margin-left:8px;
-    line-height: 15px;
+    line-height: 1;
   }
   #save_title button{
     margin-right: 0 !important;
